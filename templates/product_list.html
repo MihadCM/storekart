@@ -15,13 +15,13 @@
     <div class="row">
         {% for product in product_chunks %}
         <!-- <div class="col-4">
-            <a href="{% url 'product_details' %}"><img src="{% static 'images/product-1.jpg' %}"></a>
+            <a href="{% url 'product_details' product.id %}"><img src="{% static 'images/product-1.jpg' %}"></a>
             <h4>Red Printed T-Shirt</h4>
             
             <p>$50.00</p>
         </div> -->
         <div class="col-4">
-            <a href="{% url 'product_details' %}"></a>
+            <a href="{% url 'product_details' product.id %}"></a>
             <img src="{{product.image.url}}">
             <h4>{{ product.title }}</h4>
             <p>${{ product.price }}</p>
