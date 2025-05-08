@@ -1,56 +1,29 @@
 {% load static %}
 <div class="small-container cart-page">
+    {% if cart %}
     <table>
         <tbody><tr>
             <th>Product</th>
             <th>Quantity</th>
             <th>Subtotal</th>
         </tr>
+        {% for cart_items in cart.added_items.all %}
         <tr>
             <td>
                 <div class="cart-info">
-                    <img src="{% static 'images/buy-1.jpg' %}">
+                    <img src="{{ cart_items.product.image.url }}">
                     <div>
-                        <p>Red Printed T-Shirt</p>
-                        <small>Price: $50.00</small>
+                        <p>{{ cart_items.title }}</p>
+                        <small>Price: ${{ cart_items.product.price }}</small>
                         <br>
                         <a href="">Remove</a>
                     </div>
                 </div>
             </td>
-            <td><input type="number" value="1"></td>
-            <td>$50.00</td>
+            <td><input type="number" value="{{ cart_items.quantity }}"></td>
+            <td>Price: ${{ cart_items.product.price }}</td>
         </tr>
-        <tr>
-            <td>
-                <div class="cart-info">
-                    <img src="{% static 'images/buy-2.jpg' %}">
-                    <div>
-                        <p>Red Printed T-Shirt</p>
-                        <small>Price: $50.00</small>
-                        <br>
-                        <a href="">Remove</a>
-                    </div>
-                </div>
-            </td>
-            <td><input type="number" value="1"></td>
-            <td>$50.00</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="cart-info">
-                    <img src="{% static 'images/buy-3.jpg' %}">
-                    <div>
-                        <p>Red Printed T-Shirt</p>
-                        <small>Price: $50.00</small>
-                        <br>
-                        <a href="">Remove</a>
-                    </div>
-                </div>
-            </td>
-            <td><input type="number" value="1"></td>
-            <td>$50.00</td>
-        </tr>
+        {% endfor %}
     </tbody></table>
     <div class="total-price">
         <table>
@@ -73,4 +46,7 @@
             </tr>
         </tbody></table>
     </div>
+    {% else %}
+    <p>Nothing in your Cart </p>
+    {% endif %}
 </div>

@@ -11,7 +11,6 @@ def index(request):
         'featured_products': featured_products,
         'latest_products': latest_products
     }
-
     return render(request, 'index.html', context)
 
 def list_products(request):
