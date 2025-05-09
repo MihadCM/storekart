@@ -9,6 +9,12 @@ def show_cart(request):
     context = {'cart': cart_obj}
     return render(request, 'cart.html', context)
 
+def remove_from_cart(request, pk):
+    item = OrderedItem.objects.get(pk=pk)
+    item.delete()
+    return redirect('cart')
+
+
 def add_to_cart(request):
     # Logic to add an item to the cart
     if request.POST:

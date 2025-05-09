@@ -1,6 +1,8 @@
 {% load static %}
+{% load multiply %}
+{% load get_total %}
 <div class="small-container cart-page">
-    {% if cart %}
+    {% if cart and cart.added_items.all %}
     <table>
         <tbody><tr>
             <th>Product</th>
@@ -16,28 +18,28 @@
                         <p>{{ cart_items.title }}</p>
                         <small>Price: ${{ cart_items.product.price }}</small>
                         <br>
-                        <a href="">Remove</a>
+                        <a href="{% url 'remove_item' cart_items.id %}">Remove</a>
                     </div>
                 </div>
             </td>
             <td><input type="number" value="{{ cart_items.quantity }}"></td>
-            <td>Price: ${{ cart_items.product.price }}</td>
+            <td>Price: ${% multiply cart_items.product.price  cart_items.quantity %}</td>
         </tr>
         {% endfor %}
     </tbody></table>
     <div class="total-price">
         <table>
-            <tbody><tr>
+            <!-- <tbody><tr>
                 <td>Subtotal</td>
                 <td>$150.00</td>
             </tr>
             <tr>
                 <td>Tax</td>
                 <td>$20.00</td>
-            </tr>
+            </tr> -->
             <tr>
                 <td>Total</td>
-                <td>$170.00</td>
+                <td>${% get_total cart %}</td>
             </tr>
 
             <tr>
