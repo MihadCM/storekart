@@ -17,6 +17,7 @@ class Order(models.Model):
                       (ORDER_DELIVERED, 'Order Delivered'), 
                       (ORDER_CANCELLED, 'Order Cancelled'))
     order_status = models.IntegerField(choices=STATUS_CHOICE, default=CART_STAGE)
+    # total_price = models.FloatField(default=0.0)
 
 
     owner = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, related_name='orders')
@@ -25,6 +26,9 @@ class Order(models.Model):
     delete_status = models.IntegerField(choices=DELETE_CHOICE, default=LIVE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return 'order-{}-{}'.format(self.id, self.owner.user.username)
 
 class OrderedItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)

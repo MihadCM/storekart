@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from . models import Order, OrderedItem
 from products.models import Product
+from django.contrib import messages
 # Create your views here.
 def show_cart(request):
     user = request.user
@@ -14,7 +15,32 @@ def remove_from_cart(request, pk):
     item.delete()
     return redirect('cart')
 
+def checkout_cart(request):
+    # Logic to add an item to the cart
+    if request.POST:
+        try:
+            user = request.user
+            customer = user.customer_profile
+            # Assuming you have a customer profile linked to the user
+            total = float(request.POST.get('total'))
+            product_id = request.POST.get('product_id') 
+            order_obj = Order.objects.get(owner=customer, order_status=Order.CART_STAGE)
+            if order_obj:
+                order_obj.order_status = Order.ORDER_CONFIRMED
+                order_obj.total_price = total
+                order_obj.save()
+                status = 'Order Confirmed Your order will be delivered within 2-3 days'
+                messages.success(request, status)
+            else:
+                status = 'No items in the cart'
+                messages.error(request, status)
 
+        except Exception as e:
+            status = 'Error in processing your order'
+            messages.error(request, status)
+        return redirect('index')
+    
+    
 def add_to_cart(request):
     # Logic to add an item to the cart
     if request.POST:
