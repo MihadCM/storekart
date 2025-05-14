@@ -28,7 +28,11 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return 'order-{}-{}'.format(self.id, self.owner.user.username)
+        if self.owner:
+            return 'order-{}-{}'.format(self.id, self.owner.user.username)
+        else:
+            return 'order-{}-No Owner'.format(self.id)
+
 
 class OrderedItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
