@@ -1,58 +1,28 @@
-{% load static %}
-{% load multiply %}
-{% load get_total %}
+{% load get_status %}
 <div class="small-container cart-page">
-    {% if cart and cart.added_items.all %}
+
+    {% if orders %}
     <table>
-        <tbody><tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-        </tr>
-        {% for cart_items in cart.added_items.all %}
+        <tbody>
         <tr>
-            <td>
-                <div class="cart-info">
-                    <img src="{{ cart_items.product.image.url }}">
-                    <div>
-                        <p>{{ cart_items.title }}</p>
-                        <small>Price: ${{ cart_items.product.price }}</small>
-                        <br>
-                        <a href="{% url 'remove_item' cart_items.id %}">Remove</a>
-                    </div>
-                </div>
-            </td>
-            <td><input type="number" value="{{ cart_items.quantity }}"></td>
-            <td>Price: ${% multiply cart_items.product.price  cart_items.quantity %}</td>
+            <th>Order Id</th>
+            <th>Date</th>
+            <th>Total Price</th>
+            <th>order status</th>
+
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.created_at }}</td>
+            <td>${{ order.total_price }}</td>
+            <td>{% get_status order.order_status %}</td>
         </tr>
         {% endfor %}
-    </tbody></table>
-    <div class="total-price">
-        <table>
-            <!-- <tbody><tr>
-                <td>Subtotal</td>
-                <td>$150.00</td>
-            </tr>
-            <tr>
-                <td>Tax</td>
-                <td>$20.00</td>
-            </tr> -->
-            <tr>
-                <td>Total</td>
-                <td>${% get_total cart %}</td>
-            </tr>
+    </tbody>
+</table>
+{% else %}
+<p> You didnt ordered anything till now </p>
+{% endif %}
 
-            <tr>
-                <td> </td>
-                <form method="post" action="{% url 'checkout' %}" enctype="multipart/form-data">
-                <input type="hidden" name="total" value="{% get_total cart %}">
-                {% csrf_token %}
-                <td> <button class="btn" type="submit">Check Out</button></td>
-                </form>
-            </tr>
-        </tbody></table>
-    </div>
-    {% else %}
-    <p>Nothing in your Cart </p>
-    {% endif %}
 </div>
