@@ -9,13 +9,13 @@
             <div class="col-4">
                 <a href="{% url 'product_details' product.id %}"><img src="{{product.image.url}}"></a>
                 <h4>{{ product.title }}</h4>
-                <div class="rating">
+                <!-- <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-o"></i>
-                </div>
+                </div> -->
                 <p>${{ product.price }}</p>
             </div>
             {% endfor %}

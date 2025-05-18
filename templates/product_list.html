@@ -21,8 +21,9 @@
             <p>$50.00</p>
         </div> -->
         <div class="col-4">
-            <a href="{% url 'product_details' product.id %}"></a>
+            <a href="{% url 'product_details' product.id %}">
             <img src="{{product.image.url}}">
+            </a>
             <h4>{{ product.title }}</h4>
             <p>${{ product.price }}</p>
         </div>

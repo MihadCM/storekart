@@ -17,8 +17,9 @@ def show_account(request):
                 phone = request.POST.get('phone')
                 #create user acoount
                 user = User.objects.create_user(username=username, password=password, email=email)
+               
                 #create customer profile
-                customer = Customer.objects.create(user=user, address=address, phone=phone)
+                customer = Customer.objects.create(name=username, user=user, address=address, phone=phone)
                 success_message = "User registered successfully"
                 messages.success(request, success_message)
         except Exception as e:
@@ -33,7 +34,7 @@ def show_account(request):
         user = authenticate(request, username=username, password=password)
         if user:
              login(request, user)
-             return redirect('products_list/')
+             return redirect('home/')
         else:
              messages.error(request, 'invalid user credential')
         
