@@ -47,7 +47,6 @@ def checkout_cart(request):
         except Exception as e:
             status = 'Error in processing your order'
             messages.error(request, status)
-        return redirect('ordersorders')
     
 
 @login_required(login_url='account')
